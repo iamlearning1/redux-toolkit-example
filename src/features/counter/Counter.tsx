@@ -1,18 +1,19 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import {
   decrement,
   increment,
   incrementByAmount,
+  decrementByAmount,
   incrementAsync,
   incrementIfOdd,
-  selectCount,
 } from './counterSlice';
+
 import styles from './Counter.module.css';
 
 export function Counter() {
-  const count = useAppSelector(selectCount);
+  const count = useAppSelector(state => state.counter.value);
   const dispatch = useAppDispatch();
   const [incrementAmount, setIncrementAmount] = useState('2');
 
@@ -40,7 +41,7 @@ export function Counter() {
       <div className={styles.row}>
         <input
           className={styles.textbox}
-          aria-label="Set increment amount"
+          aria-label="Set amount"
           value={incrementAmount}
           onChange={(e) => setIncrementAmount(e.target.value)}
         />
@@ -49,6 +50,12 @@ export function Counter() {
           onClick={() => dispatch(incrementByAmount(incrementValue))}
         >
           Add Amount
+        </button>
+        <button
+          className={styles.button}
+          onClick={() => dispatch(decrementByAmount(incrementValue))}
+        >
+          Remove Amount
         </button>
         <button
           className={styles.asyncButton}
